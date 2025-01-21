@@ -1,5 +1,5 @@
 clean:
-	@find .. -type d -name "__pycache__" -exec rm -rf {} +
+	@find ./srcs -type d -name "__pycache__" -exec rm -rf {} +
 	@echo "\033[92mCleaned up the project.\033[0m"
 
 virtual:
