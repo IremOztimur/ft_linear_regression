@@ -7,7 +7,7 @@ class Loss(ABC):
         pass
     
 class MAE(Loss):
-    def calculate(predictions, targets):
+    def calculate(self, predictions, targets):
         return np.mean(np.abs(predictions - targets))
-    def grad(predictions, targets):
+    def grad(self, predictions, targets):
         return np.where(predictions > targets, 1, -1) / len(predictions)
