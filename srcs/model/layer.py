@@ -20,6 +20,7 @@ class Dense(Layer):
     def forward(self, inputs):
         self.inputs = inputs
         self.linear_output = np.dot(inputs, self.theta1) + self.theta0
+        return self.linear_output
         
     def backward(self, gradients):
         self.dtheta1 = np.dot(self.inputs.T, gradients)
