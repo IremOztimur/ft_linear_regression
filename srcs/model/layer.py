@@ -25,4 +25,3 @@ class Dense(Layer):
     def backward(self, gradients):
         self.dtheta1 = np.dot(self.inputs.T, gradients)
         self.dtheta0 = np.sum(gradients, axis=0, keepdims=True)
-        self.dinputs = np.dot(gradients, self.theta1.T)
