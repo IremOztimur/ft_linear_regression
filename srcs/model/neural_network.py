@@ -60,3 +60,42 @@ class NeuralNetwork:
         return self.history
     def predict(self, X):
         return self.layers[0].forward(X)
+    
+    def save_model(self, file_path):
+        model_data = {
+            "topology": [], 
+            "parameters": []
+        }
+
+        for layer in self.layers:
+            model_data["topology"].append({
+                "n_inputs": layer.n_inputs,
+                "n_neurons": layer.n_neurons,
+            })
+
+            model_data["parameters"].append({
+                "theta0": layer.theta0,
+                "theta1": layer.theta1
+            })
+        model_data["learning_rate"] = self.optimizer.learning_rate
+
+        np.save(file_path, model_data, allow_pickle=True)
+        print(f"\033[94m> model saved to {file_path}\033[0m")
+        
+    def load_model(self, file_path):
+        model_data = np.load(file_path, allow_pickle=True).item()
+
+        self.layers = []
+
+        for layer_data, param_data in zip(model_data["topology"], model_data["parameters"]):
+            layer = Dense(
+                n_inputs=layer_data["n_inputs"],
+                n_neurons=layer_data["n_neurons"]
+            )
+
+            layer.theta1 = param_data["theta1"]
+            layer.theta0 = param_data["theta0"]
+
+            self.layers.append(layer)
+        print(f"\033[95m> model loaded from {file_path}\033[0m")
+        return self
