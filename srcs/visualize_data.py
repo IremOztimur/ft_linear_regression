@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from preprocess import CustomStandardScaler
+from model.preprocess import CustomStandardScaler
 
 df = pd.read_csv('../data/data.csv')
 
