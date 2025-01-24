@@ -66,6 +66,7 @@ To train the model, run the `train.py` script with the required arguments:
 ```sh
 python train.py --data ../data/data.csv --epochs 150 --learning_rate 0.1 --model_name car_price_model
 ```
+<img width="999" alt="Image" src="https://github.com/user-attachments/assets/a1c61048-497c-4d12-a9f3-404b02264fc8" />
 
 ### Predicting Car Prices
 
