@@ -8,6 +8,8 @@ class CustomStandardScaler:
         return self
     
     def transform(self, X):
+        if isinstance(X, np.ndarray):
+            return (X - self.mean['km']) / self.std['km']
         return (X - self.mean) / self.std
     
     def fit_transform(self, X):
