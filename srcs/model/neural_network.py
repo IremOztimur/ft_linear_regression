@@ -1,6 +1,7 @@
 from model.layer import Dense
 from model.loss import MAE
 from model.optimizer import SGD
+from model.metric import coefficient_of_determination
 import numpy as np
 
 class NeuralNetwork:
@@ -46,7 +47,9 @@ class NeuralNetwork:
             if validation_data:
                 y_pred = self.predict(X_val)
                 val_loss = self.loss_function.calculate(y_val, y_pred)
+                r2_val = coefficient_of_determination(y_val, y_pred)
                 self.history['val_loss'].append(val_loss)
+                self.history['r2_val'] = r2_val
                 
                 if val_loss < best_loss:
                     best_loss = val_loss
@@ -57,7 +60,13 @@ class NeuralNetwork:
                 if patience_counter == patience:
                     print(f"Early stopping at epoch {epoch}")
                     break
+        
+        y_pred_train = self.predict(X)
+        r2_train = coefficient_of_determination(y, y_pred_train)
+        self.history['r2_train'] = r2_train
+            
         return self.history
+    
     def predict(self, X):
         return self.layers[0].forward(X)
     
@@ -82,7 +91,7 @@ class NeuralNetwork:
         model_data["learning_rate"] = self.optimizer.learning_rate
 
         np.save(file_path, model_data, allow_pickle=True)
-        print(f"\033[94m> model saved to {file_path}\033[0m")
+        print(f"\033[95m> model saved to {file_path}\033[0m")
         
     def load_model(self, file_path):
         model_data = np.load(file_path, allow_pickle=True).item()
