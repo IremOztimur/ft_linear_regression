@@ -1,6 +1,6 @@
 from model.layer import Dense
 from model.optimizer import SGD
-from preprocess import CustomStandardScaler, train_test_split
+from model.preprocess import CustomStandardScaler, train_test_split
 from model.regression import LinearRegression
 import pandas as pd
 import numpy as np
@@ -34,16 +34,20 @@ def main():
     
     word = pyfiglet.figlet_format("Linear Regression Training")
     print(f"\033[95m{word}\033[00m")
-    print("*" * 40)
-    print("\033[95mTraining the model...\033[00m")
-    print("*" * 40)
+    print("\033[95m" + "*" * 40 + "\033[00m")
+    print("Training the model...")
+    print("\033[95m" + "*" * 40 + "\033[00m")
     history = model.train(X_train, y_train, epochs=args.epochs, validation_data=(X_test, y_test), patience=3)
-    print("\033[92mTraining completed.\033[00m")
-    print("*" * 40)
+    print("\033[90mTraining completed.\033[00m")
+    print("\033[95m" + "*" * 40 + "\033[00m")
     
-    print("Training Loss: ", history['loss'][-1])
-    print("Validation Loss: ", history['val_loss'][-1])
-    print("*" * 40)
+    print("Training MAE: ", history['loss'][-1])
+    print("Validation MAE: ", history['val_loss'][-1])
+    print("\033[95m" + "*" * 40 + "\033[00m")
+    print("Training R²: ", history['r2_train'])
+    if 'r2_val' in history:
+        print("Validation R²: ", history['r2_val'])
+    print("\033[95m" + "*" * 40 + "\033[00m")
     print("\n")
     
     plt.figure(figsize=(10, 6))
@@ -56,17 +60,10 @@ def main():
     plt.close
     
     y_pred_train = model.predict(X_train)
-    y_pred_test = model.predict(X_test)
     
-    y_test_original = y_test * scaler.std['price'] + scaler.mean['price']
-    y_pred_test_original = y_pred_test * scaler.std['price'] + scaler.mean['price']
     y_train_original = y_train * scaler.std['price'] + scaler.mean['price']
     y_pred_train_original = y_pred_train * scaler.std['price'] + scaler.mean['price']
-
     
-    print("\n")
-    for true, pred in zip(y_test_original[:5], y_pred_test_original[:5]):
-        print(f"True Price: {true[0]:.2f}, Predicted Price: {pred[0]:.2f}")
     
     plt.figure(figsize=(10, 6))
     plt.scatter(X_train, y_train_original, color='green', label='Actual data (Train)')
