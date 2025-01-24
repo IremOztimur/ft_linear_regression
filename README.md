@@ -10,8 +10,6 @@ This project is part of the 42 curriculum. The aim of this project is to introdu
 - [Usage](#usage)
 - [Training the Model](#training-the-model)
 - [Predicting Car Prices](#predicting-car-prices)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
@@ -79,8 +77,3 @@ python predict.py --model depo/car_price_model.npy
 
 You will be prompted to enter the mileage value. The program will predict the car price based on the entered mileage. You can continue to enter mileage values or type 'quit' to exit the program.
 
-
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
