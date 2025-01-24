@@ -29,6 +29,8 @@ def main():
     
     model = LinearRegression()
     model.optimizer.learning_rate = args.learning_rate
+    model.mean = scaler.mean
+    model.std = scaler.std
     
     word = pyfiglet.figlet_format("Linear Regression Training")
     print(f"\033[95m{word}\033[00m")
@@ -60,6 +62,7 @@ def main():
     y_pred_test_original = y_pred_test * scaler.std['price'] + scaler.mean['price']
     y_train_original = y_train * scaler.std['price'] + scaler.mean['price']
     y_pred_train_original = y_pred_train * scaler.std['price'] + scaler.mean['price']
+
     
     print("\n")
     for true, pred in zip(y_test_original[:5], y_pred_test_original[:5]):

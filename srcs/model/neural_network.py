@@ -64,7 +64,9 @@ class NeuralNetwork:
     def save_model(self, file_path):
         model_data = {
             "topology": [], 
-            "parameters": []
+            "parameters": [],
+            "mean": self.mean,
+            "std": self.std
         }
 
         for layer in self.layers:
@@ -86,6 +88,8 @@ class NeuralNetwork:
         model_data = np.load(file_path, allow_pickle=True).item()
 
         self.layers = []
+        self.mean = model_data["mean"]
+        self.std = model_data["std"]
 
         for layer_data, param_data in zip(model_data["topology"], model_data["parameters"]):
             layer = Dense(
@@ -93,9 +97,9 @@ class NeuralNetwork:
                 n_neurons=layer_data["n_neurons"]
             )
 
-            layer.theta1 = param_data["theta1"]
             layer.theta0 = param_data["theta0"]
-
+            layer.theta1 = param_data["theta1"]
+            
             self.layers.append(layer)
         print(f"\033[95m> model loaded from {file_path}\033[0m")
         return self
