@@ -27,6 +27,14 @@ def main():
         
         try:
             mileage = float(mileage)
+            if mileage < 0:
+                print("\033[95mNice try diddy :)\033[00mm")
+                print("Invalid input. Mileage cannot be negative.")
+                continue
+            if mileage >= 42 * 1e4:
+                print("\033[95mNice try diddy :)\033[00mm")
+                print("Invalid input. Mileage value is too large.")
+                continue
         except ValueError:
             print("Invalid input. Please enter a numeric value.")
             continue
