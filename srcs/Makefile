@@ -1,5 +1,7 @@
 DEPO_DIR = ./depo
 
+all: create virtual
+
 clean:
 	@find . -type d -name "__pycache__" -exec rm -rf {} +
 	@rm -fr $(DEPO_DIR)
